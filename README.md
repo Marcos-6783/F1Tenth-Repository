@@ -77,6 +77,26 @@ La primera vez que ejecutamos el comando, el simulador va a demorar un poco en c
 
 https://github.com/user-attachments/assets/1791be99-73b6-4a22-acc2-6efa6fd40e5f
 
+#### 1.4 Problemas de ejecución
+En caso de tener algun error al momento de ejecutar el archivo `.launch` correspondiente al simulador, puede usar el siguiente comando para eliminar una libreria que da errores en ciertas computadoras:
+```bash
+python3 -m pip uninstall -y coverage
+sudo apt purge -y python3-coverage
+```
+
+Una vez eliminada la libreria, volvemos a compilar el repositorio:
+```bash
+cd ~/F1Tenth-Repository
+rm -rf build/ install/ log/
+colcon build --symlink-install
+source install/setup.bash
+```
+
+Y se vuelve a lanzar el simulador:
+```bash
+ros2 launch f1tenth_gym_ros gym_bridge_launch.py
+```
+
 ## 2. Estructura del Repositorio
 
 El repositorio proporcionado fue desarrollado a partir de las diferentes tareas que se pueden llevar a cabo dentro del simulador, a su vez, se agrego informacion util de practicas, que los creadores de la competencia proporcionan para ir aprendiendo aspectos importantes de la navegacion autonoma.
