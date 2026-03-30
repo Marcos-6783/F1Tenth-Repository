@@ -1,26 +1,24 @@
-# Simulador de F1TENTH para las competencias de vehiculos autonomos
-El simulador de F1TENTH para ROS 2 es un entorno de simulación diseñado para probar algoritmos de control, navegación y planificación en un vehículo autónomo a escala 1/10.
+# F1TENTH Simulator for Autonomous Vehicle Competitions
+The F1TENTH simulator for ROS 2 is a simulation environment designed to test control, navigation, and planning algorithms on a 1/10 scale autonomous vehicle.
 
-**Características del simulador F1TENTH en ROS 2**
-- Publica y suscribe tópicos en ROS 2, permitiendo interacción con sensores virtuales y actuadores del robot.
-- Simula sensores como LIDAR y odometría.
-- Compatible con algoritmos de navegación autónoma.
-- Permite el uso de 1 o 2 vehiculos simultaneamente.
+**Features of the F1TENTH Simulator in ROS 2**
+- Publishes and subscribes to ROS 2 topics, enabling interaction with virtual sensors and actuators.
+- Simulates sensors such as LiDAR and odometry.
+- Compatible with autonomous navigation algorithms.
+- Supports 1 or 2 vehicles simultaneously.
 
-## 1. Instalacion del simulador
+## 1. Simulator Installation
 
-#### 1.1. Instalacion de dependencias y simulador
-- **ROS 2 Humble**: Siga las instrucciones [aqui](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html), para instalarlo.
+### 1.1 Install Dependencies and Simulator
+- **ROS 2 Humble**: Follow the instructions [here](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 - **F1TENTH Gym**
-  ```bash
+```bash
   git clone https://github.com/f1tenth/f1tenth_gym
   sudo apt install python3-pip
   cd f1tenth_gym && pip3 install -e .
-  ```
+```
 
-**Instalacion del simulador:**
-
-Clonar el repositorio en la computadora:
+Install the simulator:
 ```bash
 cd $HOME
 git clone https://github.com/widegonz/F1Tenth-Repository.git
@@ -28,9 +26,9 @@ git clone https://github.com/widegonz/F1Tenth-Repository.git
 
 https://github.com/user-attachments/assets/984a755c-6259-4271-9f88-51f68e425af5
 
-#### 1.2. Instalacion de dependencias del simulador
+#### 1.2. Installation of simulator dependencies
+Dependencies are installed using rosdep:
 
-Las dependencias se instalan con rosdep:
 ```bash
 cd
 sudo apt install python3-rosdep2
@@ -42,49 +40,49 @@ rosdep install -i --from-path src --rosdistro humble -y
 
 https://github.com/user-attachments/assets/4c3ea5fb-4486-459f-beb7-bb7e8efa2a34
 
-#### 1.3. Actualizar el parámetro correcto para la ruta al archivo del mapa
+#### 1.3. Update Map Path in sim.yaml
 
-Para asegurarnos de que el simulador logra encontrar correctamente los mapas, debemos modificar la ruta que viene por defecto en el archivo `sim.yaml`, la cual es la siguiente:
+To ensure that the simulator can locate the maps correctly, we need to modify the default path in the `sim.yaml` file, which is as follows:
 
 `/home/your_user/F1Tenth-Repository/src/f1tenth_gym_ros/maps/levine`
 
-En este caso, se reemplazará la parte que dice `your_user` y se va a escribir el nombre de usuario que se haya definido en nuestra computadora. El proceso para realizar esto es el siguiente:
+In this case, the part that says `your_user` will be replaced with the username that has been set on your computer. Here’s how to do it:
 
 https://github.com/user-attachments/assets/f66baff8-8d29-4306-a2e5-d5a50eb888f3
 
-Con el path modificado, solo tenemos que dirigirnos a la carpeta principal y realizar la compilacion de nuestro espacio de trabajo.
+With the path modified, all we have to do is navigate to the main folder and compile our workspace.
 
 ```bash
 cd ~/F1Tenth-Repository
 colcon build
 ```
 
-#### 1.4. Iniciar la simulacion
+#### 1.4. Start the simulation
 
-Para iniciar la simulacion, debemos asegurarnos de haber hecho source a nuestro espacio de trabajo
+To start the simulation, make sure you have run `source` in your workspace
 ```bash
 cd ~/F1Tenth-Repository
 source install/setup.bash
 ```
 
-Luego usamos el siguiente comando para cargar el simulador:
+Then we use the following command to load the simulator:
 
 ```bash
 ros2 launch f1tenth_gym_ros gym_bridge_launch.py
 ```
 
-La primera vez que ejecutamos el comando, el simulador va a demorar un poco en cargar el modelo del robot, las proximas veces se iniciará mas rapidamente.
+The first time you run the command, the simulator will take a little while to load the robot model; subsequent times, it will start up more quickly.
 
 https://github.com/user-attachments/assets/1791be99-73b6-4a22-acc2-6efa6fd40e5f
 
-#### 1.4 Problemas de ejecución
-En caso de tener algun error al momento de ejecutar el archivo `.launch` correspondiente al simulador, puede usar el siguiente comando para eliminar una libreria que da errores en ciertas computadoras:
+#### 1.4 Execution Issues
+If you encounter an error when running the simulator's `.launch` file, you can use the following command to remove a library that causes errors on certain computers:
 ```bash
 python3 -m pip uninstall -y coverage
 sudo apt purge -y python3-coverage
 ```
 
-Una vez eliminada la libreria, volvemos a compilar el repositorio:
+Once the library has been removed, we recompile the repository:
 ```bash
 cd ~/F1Tenth-Repository
 rm -rf build/ install/ log/
@@ -92,69 +90,69 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-Y se vuelve a lanzar el simulador:
+And the simulator is restarted:
 ```bash
 ros2 launch f1tenth_gym_ros gym_bridge_launch.py
 ```
 
-## 2. Estructura del Repositorio
+## 2. Repository Structure
 
-El repositorio proporcionado fue desarrollado a partir de las diferentes tareas que se pueden llevar a cabo dentro del simulador, a su vez, se agrego informacion util de practicas, que los creadores de la competencia proporcionan para ir aprendiendo aspectos importantes de la navegacion autonoma.
+The repository provided was developed based on the various tasks that can be performed within the simulator. Additionally, it includes practical information provided by the competition organizers to help users learn key aspects of autonomous navigation.
 
 <p align="center">
   <img src="img/repo.png" />
   <br />
-  <em>Contenido del Repositorio</em>
+  <em>Repository Contents</em>
 </p>
 
-#### 2.1. Carpeta `Laboratories`
+#### 2.1. `Laboratories` Folder
 
-Dentro de esta carpeta se incluyen practicas que los desarolladores de la competencia proporcionan con el objetivo de que los estudiantes aprendan sobre el uso del simulador y el robot real. Se tienen un total de 7 practicas, correspondientes a los siguientes temas:
-- Laboratorio 1: Introduccion a ROS 2
-- Laboratorio 2: Freno de Emergencia Automatico
-- Laboratorio 3: Seguidor de Muro (Algoritmo de Control)
-- Laboratorio 4: Follow the Gap (Algoritmo de Control)
-- Laboratorio 5: Pure Pursuit (Planificación de Movimiento)
-- Laboratorio 6: Rapidly-exploring Random Tree (RRT)
-- Laboratorio 7: Model Predictive Control (MPC)
+This folder contains exercises provided by the competition organizers to help students learn how to use the simulator and the actual robot. There are a total of 7 exercises, covering the following topics:
+- Lab 1: Introduction to ROS 2
+- Lab 2: Automatic Emergency Braking
+- Lab 3: Wall Follower (Control Algorithm)
+- Lab 4: Follow the Gap (Control Algorithm)
+- Lab 5: Pure Pursuit (Motion Planning)
+- Lab 6: Rapidly-exploring Random Tree (RRT)
+- Lab 7: Model Predictive Control (MPC)
 
-#### 2.2. Paquete `Controllers`
-Como su nombre lo indica, esta carpeta es un paquete de ROS, que contiene varios nodos que tienen como objetivo controlar el movimiento del robot, es decir, enviar mensajes de direccion y velocidad para hacer que el robot siga un determinado comportamiento. Es importante mencionar que estos nodos son solo una serie de funciones y estructuras basicas que sirven de guia para que cada estudiante escriba su propia version del codigo.
+#### 2.2. `Controllers` Package
+As the name suggests, this folder is a ROS package containing several nodes designed to control the robot’s movement—that is, to send direction and speed messages to make the robot follow a specific behavior. It is important to note that these nodes are merely a set of basic functions and structures intended to serve as a guide for each student to write their own version of the code.
 
 <p align="center">
   <img src="img/controllers.png" />
   <br />
-  <em>Contenido de la carpeta Controllers</em>
+  <em>Contents of the Controllers folder</em>
 </p>
 
-Hay un total de 6 nodos, cada uno correspondiente a una practica de laboratorio, la primer practica de laboratorio es una introduccion a ROS, por eso no esta incluido en esta carpeta.
+There are a total of 6 nodes, each corresponding to a lab exercise. The first lab exercise is an introduction to ROS, so it is not included in this folder.
 
-- `ttc_node.py`: Nodo destinado a contener el codigo necesario para asegurar un frenado de emergencia automatico.
-- `pid_node.py`: Nodo destinado a contener un controlador PID, para el seguimiento de uno de los muros del mapa.
-- `gap_node.py`: Nodo destinado a contener el control reactivo `Follow the Gap` y permitir al robot evitar obstaculos.
-- `purepursuit_node.py`: Nodo destinado a contener el codigo necesario para que el robot sea capaz de seguir una trayectoria definida previamente.
-- `rrt_node.py`: Nodo destinado a contener el codigo necesario para usar el algoritmo RRT y generar trayectorias locales que le permitan al robot moverse y evitar obstaculos.
-- `mpc_node.py`: Nodo destinado a contener el codigo necesario para que el robot use el controlador `MPC` para moverse.
+- `ttc_node.py`: A node designed to contain the code necessary to ensure automatic emergency braking.
+- `pid_node.py`: Node designed to contain a PID controller for tracking one of the walls on the map.
+- `gap_node.py`: Node designed to contain the reactive `Follow the Gap` control and allow the robot to avoid obstacles.
+- `purepursuit_node.py`: Node designed to contain the code necessary for the robot to follow a predefined path.
+- `rrt_node.py`: Node designed to contain the code necessary to use the RRT algorithm and generate local trajectories that allow the robot to move and avoid obstacles.
+- `mpc_node.py`: Node designed to contain the code necessary for the robot to use the `MPC` controller to move.
 
-#### 2.3. Paquete `f1tenth_gym_ros`
+#### 2.3. `f1tenth_gym_ros` Package
 
-Dentro de este paquete, esta todo lo necesario para que el simulador `f1tenth_gym` funcione junto a ROS y asi poder hacer uso del simulador con Rviz, en general, en este paquete no se van a realizar muchos cambios, a mas de la carpeta `maps` y `config`
+This package contains everything needed for the `f1tenth_gym` simulator to work with ROS, allowing you to use the simulator with Rviz. Generally speaking, few changes will be made to this package, aside from the `maps` and `config` folders.
 
 <p align="center">
   <img src="img/bridge.png" />
   <br />
-  <em>Contenido de la carpeta f1tenth_gym_ros</em>
+  <em>Contents of the f1tenth_gym_ros folder</em>
 </p>
 
-**Carpeta `maps`**
+**`maps` folder**
 
-Como su nombre lo indica, dentro de esta carpeta vamos a agregar todo los mapas que nosotros necesitemos simular. Para poder agregar un mapa, necesitamos basicamente de 2 archivos:
-- Archivo `.png` el cual representa la imagen de nuestro mapa.
-- Archivo `.yaml` el cual es un archivo de configuración de un mapa en ROS 2, utilizado en la navegación autonoma.
+As the name suggests, this is where we’ll add all the maps we need for simulation. To add a map, we basically need two files:
+- A `.png` file, which represents the image of our map.
+- A `.yaml` file, which is a map configuration file in ROS 2 used for autonomous navigation.
 
-Siempre que se requiera agregar un nuevo mapa, necesitamos ambos archivos, los cuales son generados al usar herrameintas de SLAM para el mapeo de localizacion simultaneos.
+Whenever a new map needs to be added, we need both files, which are generated using SLAM tools for simultaneous localization and mapping.
 
-Una estructura basica de un archivo `.yaml`, usado para el simulador, es la siguiente:
+A basic structure of a `.yaml` file used for the simulator is as follows:
 
 ```bash
 image: levineB.png
@@ -165,54 +163,53 @@ occupied_thresh: 0.65
 free_thresh: 0.196 que es este arhivo .yaml?
 ```
 
-**Explicación de cada parámetro:**  
+**Explanation of each parameter:**  
 1. **`image: levineB.png`**  
-   - Es la imagen en escala de grises que representa el mapa del entorno.  
-   - Normalmente, se genera con herramientas como **SLAM Toolbox**, **gmapping** o **map_server**.  
+   - This is the grayscale image representing the map of the environment.  
+   - It is typically generated using tools such as **SLAM Toolbox**, **gmapping**, or **map_server**.  
 
 2. **`resolution: 0.050000`**  
-   - Define el tamaño de cada píxel en **metros/píxel**.  
-   - En este caso, cada píxel equivale a **5 cm** en el mundo real.  
+   - Defines the size of each pixel in **meters/pixel**.  
+   - In this case, each pixel corresponds to **5 cm** in the real world.  
 
 3. **`origin: [-25.0, -12.75, 0.000000]`**  
-   - Define la posición del origen del mapa en el sistema de coordenadas global (X, Y, Theta).  
-   - Aquí, el origen del mapa está en (-25.0, -12.75) metros y **0 radianes** de rotación.  
+   - Defines the position of the map’s origin in the global coordinate system (X, Y, Theta).  
+   - Here, the map origin is at (-25.0, -12.75) meters and **0 radians** of rotation.  
 
 4. **`negate: 0`**  
-   - Indica si se debe invertir el color de la imagen.  
-   - `0` significa que los **valores oscuros** representan obstáculos y los **valores claros** son zonas libres.  
+   - Indicates whether the image color should be inverted.  
+   - `0` means that **dark values** represent obstacles and **light values** are clear areas.  
 
 5. **`occupied_thresh: 0.65`**  
-   - Límite de umbral para considerar un píxel como **ocupado** (obstáculo).  
-   - Si la intensidad del píxel es **mayor a 65%**, se considera **obstáculo**.  
+   - Threshold limit for considering a pixel **occupied** (obstacle).  
+   - If the pixel intensity is **greater than 65%**, it is considered an **obstacle**.  
 
 6. **`free_thresh: 0.196`**  
-   - Límite de umbral para considerar un píxel como **libre**.  
-   - Si la intensidad del píxel es **menor a 19.6%**, se considera **zona navegable**.  
+   - Threshold limit for considering a pixel **free**.  
+   - If the pixel intensity is **less than 19.6%**, it is considered a **navigable area**.  
 
+**`config` folder**
+This folder contains a single file named `sim.yaml`. This file contains the settings required for the simulator to function properly. Specifically, we will only modify three sections:
 
-**Carpeta `config`**
-Esta carpeta contiene un unico archivo de nombre `sim.yaml`, dentro de este archivo se encuentran las configuraciones necesarias para que el simulador funcione correctamente, en particular, solo vamos a modificar 3 secciones:
-
-Si queremos cambiar el mapa que esta utilizando cambiamos esta linea:
+If you want to change the map being used, modify this line:
 ```bash
     map_path: '/home/israel/F1Tenth-Repository/src/f1tenth_gym_ros/maps/levine'
 ```
 
-En este caso usa el mapa `levine.png`, para asegurarnos de usar otro mapa diferente, debemos agregar el png dentro de la carpeta maps y modificar el final de la linea mencionada, con el nombre de nuestro mapa.
+In this case, it uses the `levine.png` map. To ensure we use a different map, we need to place the PNG file in the maps folder and modify the end of the line mentioned above to include the name of our map.
 
 https://github.com/user-attachments/assets/d1302653-d5e6-4022-9df9-a0113e9bdb12
 
-La otra seccion a modificar es:
+The other section to be modified is:
 ```bash
     # opponent parameters
     num_agent: 1
 ```
-Dependiendo de si queremos que aparezcan 1 o 2 robots dentro de nuestra simulacion.
+Depending on whether we want 1 or 2 robots to appear in our simulation.
 
 https://github.com/user-attachments/assets/a4a5d284-6bfa-42c0-ae58-5a4694da63ec
 
-Y por ultimo:
+And finally:
 ```bash
     # ego starting pose on map
     sx: 0.0
@@ -224,91 +221,91 @@ Y por ultimo:
     sy1: 8.5
     stheta1: 3.14
 ```
-Esto define la posicion de inicio de nuestros robots en el mapa, si está en (0,0,0), el robot aparece en el origen definido en el archivo `.yaml`, si queremos que aparezca en una posicion diferente, asignamos valores de `x`,`y` para cambiar la posicion y `tetha` para modificar la orientacion.
+This defines the starting position of our robots on the map. If it is set to (0,0,0), the robot appears at the origin defined in the `.yaml` file. If we want it to appear at a different position, we assign values to `x` and `y` to change the position and to `tetha` to modify the orientation.
 
 https://github.com/user-attachments/assets/6269e319-5558-458c-a9b0-5b7240a9e0cd
 
-#### 2.4. Paquete `path_planning`
+#### 2.4. `path_planning` Package
 
-Al momento de desarrollar algoritmos de navegacion autonoma, es necesario incluir aquellos que a partir de un mapa, generen una trayectoria global, minimizando varios parametros como la distancia recorrida, la velocidad, la dinámica del automovil, entre otras.
+When developing autonomous navigation algorithms, it is necessary to include those that, based on a map, generate a global path while minimizing various parameters such as distance traveled, speed, and vehicle dynamics, among others.
 
-Este paquete de ROS, tiene como objetivo almacenar todos aquellos algoritmos que se desarrollen con el objetivo de realizar la planeacion global de la ruta que debe seguir nuestro robot movil.
+This ROS package is designed to store all algorithms developed for the purpose of performing global route planning for our mobile robot.
 
 <p align="center">
   <img src="img/path_planning.png" />
   <br />
-  <em>Contenido de la carpeta path_planning</em>
+  <em>Contents of the path_planning folder</em>
 </p>
 
-El paquete contiene un archivo llamado `waypoint_recorder.py`, el cual sirve como una plantilla de un nodo de ROS 2 para un logger de waypoints basado en odometría. Su propósito es registrar las posiciones (x, y, orientación w) del robot en un archivo CSV a medida que se mueve con el objetivo de ser la base para desarrollar un sistema de navegación basado en waypoints. Es uno de los algoritmos mencionados para el controlador `Pure Pursuit`, el cual usa waypoints para seguir una trayectoria definida.
+The package contains a file named `waypoint_recorder.py`, which serves as a template for a ROS 2 node for an odometry-based waypoint logger. Its purpose is to record the robot’s positions (x, y, orientation w) in a CSV file as it moves, with the goal of serving as the basis for developing a waypoint-based navigation system. It is one of the algorithms mentioned for the `Pure Pursuit` controller, which uses waypoints to follow a defined trajectory.
 
-#### 2.5. Carpeta `Waypoints`
+#### 2.5. `Waypoints` Folder
 
-Una carpeta destinada a contener archivos `.csv` los cuales representan los diferentes waypoints necesarios para definir una trayectoria global para que el robot movil siga.
+A folder designed to hold `.csv` files that represent the various waypoints needed to define an overall path for the mobile robot to follow.
 
-**¿Qué son los Waypoints?**  
-Los **waypoints** son puntos de referencia en el espacio (generalmente en coordenadas (x, y, theta)) que indican posiciones clave por donde debe pasar un robot o vehículo durante su navegación.  
+**What are Waypoints?**  
+**Waypoints** are reference points in space (generally expressed as (x, y, theta) coordinates) that indicate key positions a robot or vehicle must pass through during navigation.  
 
-En el contexto de robótica y ROS 2, un waypoint normalmente se define como:  
-- **(x, y):** Posición en el plano (o en 3D si se usa navegación aérea o submarina).  
-- **(theta) o (w):** Orientación del robot en ese punto (en radianes o en cuaterniones).  
+In the context of robotics and ROS 2, a waypoint is typically defined as:  
+- **(x, y):** Position in the plane (or in 3D if aerial or underwater navigation is used).  
+- **(theta) or (w):** The robot’s orientation at that point (in radians or quaternions).  
 
-**¿Por qué son útiles los waypoints?**  
-Los waypoints son fundamentales en múltiples aplicaciones de robótica y navegación:  
+**Why are waypoints useful?**  
+Waypoints are fundamental in multiple robotics and navigation applications:  
 
-1. **Navegación autónoma:** Se usan como puntos de paso para que un robot planifique su trayectoria desde un punto inicial hasta un destino.  
+1. **Autonomous navigation:** They are used as waypoints to help a robot plan its path from a starting point to a destination.  
 
-2. **Mapeo y exploración:** En SLAM (Simultaneous Localization and Mapping), los waypoints pueden marcar lugares explorados o de interés.  
+2. **Mapping and exploration:** In SLAM (Simultaneous Localization and Mapping), waypoints can mark explored locations or points of interest.  
 
-3. **Seguimiento de trayectorias:** Un dron o un robot móvil puede seguir una serie de waypoints predefinidos para moverse de manera controlada.  
+3. **Trajectory tracking:** A drone or mobile robot can follow a series of predefined waypoints to move in a controlled manner.  
 
-4. **Registro y análisis de movimientos:** Se pueden almacenar waypoints para analizar la trayectoria de un robot después de una simulación o prueba real.  
+4. **Motion recording and analysis:** Waypoints can be stored to analyze a robot’s trajectory after a simulation or real-world test. 
 
-## 3. Tópicos presentes en la simulación
-Cuando ejecutamos la simulacion con 1 solo vehiculo y usamos el comando `ros2 topic list`, obtenemos los topicos:
+## 3. Topics in the simulation
+When we run the simulation with a single vehicle and use the `ros2 topic list` command, we get the following topics:
 
 <p align="center">
   <img src="img/single_agent.png" />
   <br />
-  <em>Topicos con 1 solo vehiculo simulando</em>
+  <em>Topics with only one vehicle simulated</em>
 </p>
 
-De los cuales los mas importantes son:
-- `/ego_racecar/odom`: Corresponde a la odometria del robot, donde podemos obtener datos de posicion y orientacion.
-- `/scan`: Tópico que envia mensajes del sensor LIDAR, con el cual se obtiene la informacion del entorno.
-- `/map`: El mapa de la simulacion, que contiene mensajes de tipo `OccupancyGrip`.
-- `/tf` y `/tf_static`: que publica los arboles de transformaciones estáticas y dinámicas presentes en la simulacion.
-- `/drive`: Donde se publican mensajes para mover el robot, mensajes del tipo `AckermannDriveStamped`.
-- `/initialpose`: Tópico que permite resetar la posicion del vehiculo.
+The most important of these are:
+- `/ego_racecar/odom`: This corresponds to the robot’s odometry, where we can obtain position and orientation data.
+- `/scan`: A topic that sends messages from the LIDAR sensor, which provides information about the environment.
+- `/map`: The simulation map, which contains `OccupancyGrip`-type messages.
+- `/tf` and `/tf_static`: Publish the static and dynamic transformation trees present in the simulation.
+- `/drive`: Where messages to move the robot are published, specifically `AckermannDriveStamped` messages.
+- `/initialpose`: Topic that allows resetting the vehicle's position.
 
-Cuando ejecutamos la simulacion con 2 vehiculos y usamos el comando `ros2 topic list`, obtenemos los topicos:
+When we run the simulation with two vehicles and use the `ros2 topic list` command, we get the following topics:
 <p align="center">
   <img src="img/two_agents.png" />
   <br />
-  <em>Topicos con 2 vehiculos simulando</em>
+  <em>Topics with 2 simulated vehicles</em>
 </p>
 
-En este caso tenemos los mismo topicos que teniamos con 1 solo vehiculo en la simulacion y a su vez, se agregan los topicos del vehiculo oponente:
-- `/opp_scan`: Los mensajes del LIDAR del oponente.
-- `/opp_racecar/odom`: La odometria del oponente.
-- `/opp_drive`: Donde se publican mensajes para mover al robot oponente, mensajes del tipo `AckermannDriveStamped`.
-- `/goal_pose`: Tópico que permite resetar la posicion del vehiculo oponente.
+In this case, we have the same topics as we did with a single vehicle in the simulation, and in addition, the topics for the opponent’s vehicle are added:
+- `/opp_scan`: Messages from the opponent’s LIDAR.
+- `/opp_racecar/odom`: The opponent’s odometry.
+- `/opp_drive`: Where messages are published to move the opponent’s robot, such as `AckermannDriveStamped` messages.
+- `/goal_pose`: A topic that allows you to reset the opponent’s vehicle position.
 
-**Nota:** Al momento de usar 2 agentes, es decir 2 vehiculos en la simulacion, debemos publicar simultaneamente mensajes de conduccion en los topicos de `/drive` y `/opp_drive`, ya que si no se hace de esta manera y solo se publican comandos en 1 solo topico, ninguno de los 2 vehiculos se va a mover. El simulador detecta que se estan publicando mensajes en los 2 topicos de movimiento de los vehiculos simulatanemente y ahi si permite el movimiento en ambos, caso contrario no.
+**Note:** When using two agents—that is, two vehicles in the simulation—we must simultaneously publish driving messages to the `/drive` and `/opp_drive` topics. If this is not done and commands are published to only one topic, neither of the two vehicles will move. The simulator detects that messages are being posted to both vehicle movement topics simultaneously, and only then does it allow movement for both; otherwise, it does not.
 
-## 4. Teleoperacion con teclado
-El nodo de teleoperacion del teclado de `teleop_twist_keyboard` también se instala como parte de las dependencias de la simulación. Para activar la teleoperación del teclado, establece `kb_teleop` en True en `sim.yaml`. Después de lanzar la simulación, en otro terminal, ejecute:
+## 4. Keyboard Teleoperation
+The `teleop_twist_keyboard` keyboard teleoperation node is also installed as part of the simulation dependencies. To enable keyboard teleoperation, set `kb_teleop` to True in `sim.yaml`. After launching the simulation, in another terminal, run:
 
 ```bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
-Para mover el vehiculo en el simulor, use las siguientes teclas:
-- `i`: para moverlo hacia delante.
-- `u`: para moverlo hacia delante y a la izquierda.
-- `o`: para moverlo hacia delante y a la derecha.
-- `k`: para detener todo el movimiento.
-- `,`: para mover hacia atras.
-- `m`: para mover hacia atras y a la izquierda.
-- `.`: para mover hacia atras y a la derecha
+To move the vehicle in the simulator, use the following keys:
+- `i`: to move forward.
+- `u`: to move forward and to the left.
+- `o`: to move forward and to the right.
+- `k`: to stop all movement.
+- `,`: to move backward.
+- `m`: to move backward and to the left.
+- `.`: to move backward and to the right
 
 https://github.com/user-attachments/assets/1961d6bf-369a-4c58-9654-8d4c7cdefe19
