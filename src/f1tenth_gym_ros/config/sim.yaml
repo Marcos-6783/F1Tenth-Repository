@@ -42,11 +42,11 @@ bridge:
     scan_beams: 1080
 
     # map parameters
-    map_path: '/home/your_user/F1Tenth-Repository/src/f1tenth_gym_ros/maps/levine'
+    map_path: '/home/marcos/F1Tenth-Repository/src/f1tenth_gym_ros/maps/Oschersleben_map_obs'
     map_img_ext: '.png'
 
     # opponent parameters
-    num_agent: 1
+    num_agent: 2
 
     # ego starting pose on map
     sx: 0.0

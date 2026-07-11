@@ -26,6 +26,9 @@ setup(
             'purepursuit_node = controllers.purepursuit_node:main',
             'rrt_node = controllers.rrt_node:main',
             'mpc_node = controllers.mpc_node:main',
+            'reactive_gap_follow = controllers.reactive_gap_follow:main',
+            'gap_node_opp = controllers.gap_node_opp:main',
+
         ],
     },
 )
