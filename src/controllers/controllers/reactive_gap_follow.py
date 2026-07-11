@@ -33,8 +33,8 @@ class ReactiveFollowGap(Node):
         self.create_subscription(Odometry, '/ego_racecar/odom', self.odom_callback, 10)
 
         # --- PARÁMETROS AJUSTABLES OPTIMIZADOS ---
-        self.rango_max = 7.5         # m — Recorte dinámico para anticipar curvas a velocidad
-        self.radio_burbuja = 45       # nº de rayos a poner en cero alrededor del obstáculo cercano
+        self.rango_max = 6.8         # m — Recorte dinámico para anticipar curvas a velocidad
+        self.radio_burbuja = 52       # nº de rayos a poner en cero alrededor del obstáculo cercano
         self.ventana_suavizado = 3    # nº de rayos para la media móvil preliminar
         self.umbral_gap = 1.7          # m — un rayo cuenta como "libre" si supera este valor
 
@@ -43,7 +43,7 @@ class ReactiveFollowGap(Node):
 
         # Configuración de Velocidades Estables
         self.vel_recta = 7          # m/s en tramos completamente despejados
-        self.vel_curva = 1.40         # m/s velocidad mínima en giros cerrados para asegurar agarre
+        self.vel_curva = 1.30         # m/s velocidad mínima en giros cerrados para asegurar agarre
 
         # Anti-oscilación (Filtro Exponencial)
         self.zona_muerta = math.radians(1.5)  # Umbral mínimo real para evitar zigzagueo fino
