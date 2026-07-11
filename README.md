@@ -24,3 +24,9 @@ Para iniciar el entorno gráfico en RViz junto con las pistas de competencia y a
 ```bash
 source ~/F1Tenth-Repository/install/setup.bash
 ros2 launch f1tenth_gym_ros gym_bridge_launch.py
+```
+
+## Video del funcionamiento del programa
+https://youtu.be/kiFlOH-mIZ0
+
+
