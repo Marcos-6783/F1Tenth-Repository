@@ -45,14 +45,54 @@ Para garantizar un desempeño competitivo en Oschersleben, el algoritmo base fue
 3. Oponente Dinámico Móvil (gap_node_opp.py)
 El segundo vehículo actúa como un obstáculo móvil predecible. Utiliza una configuración de seguridad conservadora y corre a una velocidad regulada de 4.2 m/s, sirviendo como entorno de pruebas en tiempo real para las maniobras de adelantamiento del carro principal.
 
-## 🚀 Flujo de Ejecución Rápido
-Sigue estos pasos en tu terminal para limpiar, compilar y lanzar la simulación completa con un solo comando:
+---
 
-Navegar y realizar una compilación limpia del paquete:
+## 🚀 Flujo de Ejecución y Despliegue
+
+Para poner en marcha la simulación multi-agente, se necesitan únicamente **dos terminales independientes**. El primer bloque compila el entorno y levanta la interfaz gráfica, mientras que el segundo ejecuta ambos vehículos en paralelo usando un hilo de fondo.
+
+### Terminal 1: Compilación y Lanzamiento del Simulador (RViz)
+Este bloque realiza una limpieza completa de los residuos de compilaciones previas, regenera los enlaces simbólicos y arranca el entorno gráfico forzando la compatibilidad de OpenGL.
+
 ```bash
 cd ~/F1Tenth-Repository
-rm -rf build/controllers/ install/controllers/
-colcon build --packages-select controllers
+rm -rf build/ install/
+colcon build --symlink-install
 source install/setup.bash
+MESA_GL_VERSION_OVERRIDE=3.3 ros2 launch f1tenth_gym_ros gym_bridge_launch.py
 ```
+### Terminal 2: Activación en Paralelo de Ambos Vehículos
+Una vez que RViz esté completamente abierto y muestre los dos chasis estáticos en la grilla de salida, ejecuta este bloque en una segunda pestaña. El operador & se encarga de enviar al carro principal al fondo para que ambos corran simultáneamente sin bloquear la terminal.
+```bash
+cd ~/F1Tenth-Repository
+source install/setup.bash
+
+# Lanzar el carro principal (Rápido) en segundo plano
+ros2 run controllers reactive_gap_follow &
+
+# Lanzar el carro oponente (Lento) en primer plano
+ros2 run controllers gap_node_opp
+```
+
+---
+
+## 📺 Demostración en Video
+
+A continuación se presenta un video con la ejecución en tiempo real del algoritmo **Follow the Gap** en el entorno multi-agente, donde se evidencia el comportamiento del vehículo principal realizando adelantamientos limpios y evitando colisiones:
+
+[▶️ Ver Video de la Ejecución en Simulación](https://www.youtube.com/watch?v=kiFlOH-mIZ0)
+
+---
+
+## 👤 Autor y Contacto
+
+Este proyecto fue desarrollado como parte de las actividades prácticas en el ámbito de la robótica autónoma y sistemas de control interactivos.
+
+* **Nombre:** Marcos Emmanuel Balón García
+* **Rol:** Estudiante de Ingeniería en Mecatrónica (6to Semestre)
+* **Clase:** Vehìculos no tripulados
+* **Universidad:** Escuela Superior Politécnica del Litoral
+* **Contacto:** [GitHub Profile](https://github.com/Marcos-6783) | mebalon@espol.edu.ec / marcosemmanuelbalon@gmail.com
+
+---
 
